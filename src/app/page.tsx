@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import connectMongoDB from '@/lib/mongodb';
 import TipHistoryModel, { ITipHistory } from '@/models/TipHistory';
+import Image from 'next/image';
 
 export default function TipCalculatorPage() {
   const [customerName, setCustomerName] = useState('');
@@ -19,6 +20,9 @@ export default function TipCalculatorPage() {
   useEffect(() => {
     const fetchHistory = async () => {
       try {
+        // Ensure MongoDB connection
+        await connectMongoDB();
+        
         const response = await fetch('/api/tip-history');
         if (!response.ok) {
           throw new Error('Failed to fetch history');
@@ -118,11 +122,13 @@ export default function TipCalculatorPage() {
         <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-3 sm:py-4">
           <div className="flex items-center justify-center sm:justify-between">
             <div className="flex items-center space-x-2 sm:space-x-3">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-r from-purple-600 to-blue-600 rounded-lg sm:rounded-xl flex items-center justify-center overflow-hidden">
-                <img 
+              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-r from-purple-600 to-blue-600 rounded-lg sm:rounded-xl flex items-center justify-center overflow-hidden relative">
+                <Image 
                   src="https://ik.imagekit.io/eccsd3n5v/e837401f-3174-409d-a7b4-c2cef3e31f60.png?updatedAt=1750484650221" 
                   alt="TipMate Logo" 
-                  className="w-full h-full object-cover"
+                  fill
+                  sizes="(max-width: 640px) 32px, 40px"
+                  className="object-cover"
                 />
               </div>
               <h1 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">

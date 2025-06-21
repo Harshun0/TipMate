@@ -11,7 +11,7 @@ interface MongoConnection {
   promise: Promise<typeof mongoose> | null;
 }
 
-let cached: MongoConnection = { conn: null, promise: null };
+const cached: MongoConnection = { conn: null, promise: null };
 
 async function connectMongoDB() {
   if (cached.conn) {
