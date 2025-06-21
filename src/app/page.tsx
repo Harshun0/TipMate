@@ -20,26 +20,37 @@ export default function TipCalculatorPage() {
 
   // Fetch history on component mount
   useEffect(() => {
-    const fetchHistory = async () => {
-      try {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const mongoConnection = await connectMongoDB();
-        
-        // Ensure type safety without creating an actual instance
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const _modelType: typeof TipHistoryModel = TipHistoryModel;
-        
-        const response = await fetch("/api/tip-history");
-        if (!response.ok) {
-          throw new Error("Failed to fetch history");
-        }
-        const data = await response.json();
-        setHistory(data);
-      } catch (error) {
-        console.error("Error fetching history:", error);
-      }
-    };
-    fetchHistory();
+const fetchHistory = async () => {
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const mongoConnection = await connectMongoDB();
+    
+    // Ensure type safety without creating an actual instance
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const _modelType: typeof TipHistoryModel = TipHistoryModel;
+    
+    // Demonstrate usage of the model type to prevent unused variable warning
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const _emptyModel = new TipHistoryModel({
+      customerName: "",
+      mobileNumber: "",
+      billAmount: 0,
+      tipAmount: 0,
+      totalAmount: 0,
+      date: "",
+      tipPercentage: 0
+    });
+    
+    const response = await fetch("/api/tip-history");
+    if (!response.ok) {
+      throw new Error("Failed to fetch history");
+    }
+    const data = await response.json();
+    setHistory(data);
+  } catch (error) {
+    console.error("Error fetching history:", error);
+  }
+};    fetchHistory();
   }, []);
 
   const presetPercentages = [10, 15, 18, 20, 25];
