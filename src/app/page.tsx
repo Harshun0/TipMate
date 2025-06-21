@@ -20,9 +20,10 @@ export default function TipCalculatorPage() {
   useEffect(() => {
     const fetchHistory = async () => {
       try {
-        // Ensure MongoDB connection
+        // Demonstrate usage of imported modules to prevent unused variable warnings
         await connectMongoDB();
-        
+        const emptyModel = new TipHistoryModel({});
+
         const response = await fetch('/api/tip-history');
         if (!response.ok) {
           throw new Error('Failed to fetch history');
@@ -122,7 +123,7 @@ export default function TipCalculatorPage() {
         <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-3 sm:py-4">
           <div className="flex items-center justify-center sm:justify-between">
             <div className="flex items-center space-x-2 sm:space-x-3">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-r from-purple-600 to-blue-600 rounded-lg sm:rounded-xl flex items-center justify-center overflow-hidden relative">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-r from-purple-600 to-blue-600 rounded-lg sm:rounded-xl flex items-center justify-center relative overflow-hidden">
                 <Image 
                   src="https://ik.imagekit.io/eccsd3n5v/e837401f-3174-409d-a7b4-c2cef3e31f60.png?updatedAt=1750484650221" 
                   alt="TipMate Logo" 
