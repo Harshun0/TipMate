@@ -9,6 +9,7 @@ const nextConfig = {
   webpack: (config, { isServer }) => {
     config.resolve.alias['@/models'] = path.resolve('./src/models');
     config.resolve.alias['@/lib'] = path.resolve('./src/lib');
+    config.resolve.alias['tailwindcss'] = path.resolve('./node_modules/tailwindcss');
     
     // Ensure external dependencies are resolved
     config.externals = [...(config.externals || [])];
