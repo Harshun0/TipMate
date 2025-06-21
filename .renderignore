@@ -1,0 +1,9 @@
+# Ignore these files/directories during deployment
+node_modules
+.next
+.git
+.gitignore
+README.md
+.env.local
+.eslintrc
+.eslintcache 
