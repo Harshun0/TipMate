@@ -7,6 +7,8 @@
     "npm": ">=10.0.0"
   },
   "scripts": {
+    "preinstall": "npx only-allow npm",
+    "install": "npm install next@15.3.4",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
