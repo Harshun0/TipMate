@@ -11,7 +11,13 @@ interface MongoConnection {
   promise: Promise<typeof mongoose> | null;
 }
 
-const cached: MongoConnection = { conn: null, promise: null };
+// Use a global variable to preserve the connection across hot reloads
+const globalAny: any = global;
+const cached: MongoConnection = globalAny.mongoose || { conn: null, promise: null };
+
+if (!globalAny.mongoose) {
+  globalAny.mongoose = cached;
+}
 
 async function connectMongoDB() {
   if (cached.conn) {
@@ -21,9 +27,17 @@ async function connectMongoDB() {
   if (!cached.promise) {
     const opts = {
       bufferCommands: false,
+      // Ensure these options are compatible with your MongoDB setup
+      serverSelectionTimeoutMS: 5000,
+      socketTimeoutMS: 45000,
     };
 
-    cached.promise = mongoose.connect(MONGODB_URI, opts);
+    try {
+      cached.promise = mongoose.connect(MONGODB_URI, opts);
+    } catch (e) {
+      cached.promise = null;
+      throw e;
+    }
   }
 
   try {
